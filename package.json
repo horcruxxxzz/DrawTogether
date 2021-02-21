@@ -1,0 +1,19 @@
+{
+  "name": "catchmind_clone",
+  "version": "1.0.0",
+  "description": "git init test hello",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idoasisay/DrawTogether.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/idoasisay/DrawTogether/issues"
+  },
+  "homepage": "https://github.com/idoasisay/DrawTogether#readme"
+}
