@@ -1,38 +1,23 @@
-import React, { useRef, useEffect } from 'react';
+// import React from 'react';
+// import useCanvas from './useCanvas';
 
-const Canvas = (props) => {
-  const canvasRef = useRef(null);
+// const postdraw = () => {
+//   index++;
+//   ctx.restore();
+// };
 
-  const draw = (ctx, frameCount) => {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctx.fillStyle = '#000';
-    ctx.beginPath();
-    ctx.arc(50, 100, 20 * Math.sin(frameCount * 0.05) ** 2, 0, 2 * Math.PI);
-    ctx.fill();
-  };
+// const predraw = (context, canvas) => {
+//   context.save();
+//   resizeCanvasToDisplaySize(context, canvas);
+//   const { width, height } = context.canvas;
+//   context.clearRect(0, 0, width, height);
+// };
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-    let frameCount = 0;
-    let animationFrameID;
+// const Canvas = (props) => {
+//   const { draw, predraw = _predraw, postdraw = _postdraw } = props;
+//   const canvasRef = useCanvas(draw, { predraw, postdraw });
 
-    const render = () => {
-      frameCount++;
-      draw(context, frameCount);
-      animationFrameID = window.requestAnimationFrame(render);
-    };
-    render();
+//   return <canvas ref={canvasRef} {...rest} />;
+// };
 
-    return () => {
-      window.cancelAnimationFrame(animationFrameID);
-    };
-
-    //context.fillStyle = '#dfdfdf';
-    //context.fillRect(0, 0, context.canvas.width, context.canvas.height);
-  }, [draw]);
-
-  return <canvas ref={canvasRef} {...props} />;
-};
-
-export default Canvas;
+// export default Canvas;

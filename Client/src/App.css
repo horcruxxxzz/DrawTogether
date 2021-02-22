@@ -2,8 +2,19 @@
   text-align: center;
 }
 
+.cursorBox {
+  display: flex;
+  width: 600px;
+  height: 200px;
+  box-sizing: border-box;
+  padding: 50px;
+  justify-content: space-between;
+  background-color: cornsilk;
+  align-items: center;
+}
 canvas {
   border: 1px solid black;
+  cursor: crosshair;
 }
 
 .App-logo {
