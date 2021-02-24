@@ -66,16 +66,7 @@ function App() {
     ctx.beginPath();
     ctx.moveTo(firstClick[0], firstClick[1]);
     ctx.lineTo(cursorX, cursorY);
-
-    //ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
-    //console.log(firstClick);
-    // if (drawable) {
-    //   //pos = { ...pos, ex: event.offsetX, ey: event.offsetY }; // 얘가 안 되는 것 같은데...
-    //   ctx.moveTo(e.offsetX, e.offsetY);
-    //   ctx.stroke();
-    //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // }
   }
 
   function finishDraw() {
