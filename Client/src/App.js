@@ -8,7 +8,8 @@ import './App.css';
 //   docStyle.setProperty('--mouse-y', e.clientY);
 // });
 // https://developer.mozilla.org/ko/docs/Web/HTML/Canvas/Tutorial/Drawing_shapes
-
+// https://codepen.io/samuli/pen/VemrdV
+// https://codepen.io/liyajie/pen/MZyrpB
 function App() {
   let canvas;
   let canvasRef = createRef(); // Ref를 사용해 캔버스의 Dom 값을 가지고 옴
@@ -33,23 +34,33 @@ function App() {
 
   //손을 떼면 -1이 되고, 클릭하면 거기에 잡히니까... 여기에다가 라인을 주면 된다.
   //클릭할 때 직선이 되어야 함
-  let isClick = false;
+  let count = 0;
 
   function clickDraw(e) {
-    console.log(drawable);
-    if (!isClick) {
-      isClick = true;
+    console.log(firstClick);
+    if (!drawable) {
+      drawable = true;
       cursorX = e.pageX;
       cursorY = e.pageY;
-    } else if (isClick) {
+    } else {
       console.log(1);
+      drawable = false;
       ctx.moveTo(firstClick[0], firstClick[1]);
       ctx.lineTo(cursorX, cursorY);
       ctx.stroke();
-      ctx.closePath();
-      isClick = false;
     }
   }
+
+  function draw(e) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    firstClick = [e.pageX, e.pageY];
+    ctx.beginPath();
+    ctx.moveTo(firstClick[0], firstClick[1]);
+    ctx.lineTo(cursorX, cursorY);
+    ctx.stroke();
+    count++;
+  }
+
   function initDraw(e) {
     // firstClick = [e.pageX, e.pageY];
     // ctx.beginPath();
@@ -58,20 +69,9 @@ function App() {
     //ctx.lineTo(e.offsetX, e.offsetY);
     //ctx.stroke();
   }
-
-  function draw(e) {
-    drawable = true;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    firstClick = [e.pageX, e.pageY];
-    ctx.beginPath();
-    ctx.moveTo(firstClick[0], firstClick[1]);
-    ctx.lineTo(cursorX, cursorY);
-    ctx.stroke();
-  }
-
   function finishDraw() {
-    ctx.stroke();
-    ctx.closePath();
+    //ctx.stroke();
+    //ctx.closePath();
     //pos = { drawable: false, X: -1, Y: -1 };
   }
 
@@ -88,7 +88,7 @@ function App() {
     ctx.lineJoin = 'round';
   }
   function resetEvent() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
   function fillEvent(event) {}
 
