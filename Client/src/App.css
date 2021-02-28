@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .cursorBox {
   display: flex;
   width: 600px;
