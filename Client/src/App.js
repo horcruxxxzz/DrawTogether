@@ -1,10 +1,8 @@
 import { React, useEffect, useState, useRef } from 'react';
 import './App.css';
 
-// https://developer.mozilla.org/ko/docs/Web/HTML/Canvas/Tutorial/Drawing_shapes
-// https://codepen.io/samuli/pen/VemrdV
-// https://codepen.io/liyajie/pen/MZyrpB
-
+//클릭했을 때 좌표를 알아내서
+// 만약에 클릭했다면 draw로 만들어내고
 function App() {
   let canvas;
   let canvasRef = useRef(null); // Ref를 사용해 캔버스의 Dom 값을 가지고 옴
@@ -13,17 +11,17 @@ function App() {
     snapshort;
 
   let ctx; //컨택스트
-  let swichD = false;
+  let count = 0;
 
   useEffect(() => {
     canvas = canvasRef.current;
     ctx = canvas.getContext('2d');
     //마우스를 내리면 드래깅 스타트를 하고
-    canvas.addEventListener('mousedown', dragStart, false);
+    canvas.addEventListener('click', dragStart, false);
     // 마우스를 무빙하면 드래깅을 하고
     canvas.addEventListener('mousemove', drag, false);
     // 마우스를 떼면 드래깅을 끝낸다
-    canvas.addEventListener('mouseup', dragEnd, false);
+    //canvas.addEventListener('mouseup', dragEnd, false);
   }, []); // []를 사용하면 디드마운트 사용하는 것과 같다
 
   function swichDrag() {
@@ -42,11 +40,14 @@ function App() {
   // 드래그 중인 포지션을 넣은 드로우 라인
   function drawLine(position) {
     //일반 선은 비긴패스 빼야 됨
-    // ctx.beginPath();
-    // ctx.moveTo(dragStartLocation.x, dragStartLocation.y);
+    ctx.beginPath();
+    ctx.moveTo(dragStartLocation.x, dragStartLocation.y);
 
     //공통
+    if (count >= 1) {
+    }
     ctx.lineTo(position.x, position.y);
+    ctx.fill();
     ctx.stroke();
   }
 
@@ -97,14 +98,19 @@ function App() {
     dragStartLocation = getCanvasCoordinates(e);
 
     //일반 선
-    ctx.beginPath();
-    ctx.moveTo(dragStartLocation.x, dragStartLocation.y);
+    // ctx.beginPath();
+    // ctx.moveTo(dragStartLocation.x, dragStartLocation.y);
 
     //테이크 스토어 옵 흔
     takeStore();
+    count++;
+    if (count === 3) {
+      draging = false;
+      //restore();
+      count = 0;
+    }
+    console.log(count);
   }
-
-  function butEvt(e) {}
 
   return (
     <div>
