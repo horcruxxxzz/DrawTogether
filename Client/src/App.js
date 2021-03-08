@@ -17,7 +17,7 @@ function App() {
     canvas = canvasRef.current;
     ctx = canvas.getContext('2d');
     //마우스를 내리면 드래깅 스타트를 하고
-    canvas.addEventListener('click', dragStart, false);
+    canvas.addEventListener('click', clickStart, false);
     // 마우스를 무빙하면 드래깅을 하고
     canvas.addEventListener('mousemove', drag, false);
     // 마우스를 떼면 드래깅을 끝낸다
@@ -39,16 +39,27 @@ function App() {
 
   // 드래그 중인 포지션을 넣은 드로우 라인
   function drawLine(position) {
+    // 드래그 한 번 할 때마다 비긴 패스구나? 그러면 안 이어지지... 이 바보야...
     //일반 선은 비긴패스 빼야 됨
-    ctx.beginPath();
-    ctx.moveTo(dragStartLocation.x, dragStartLocation.y);
-
+    // 클릭한 걸 어디에 담고 있다가 drawLine과 이어주어야 한다. 어떻게?
     //공통
-    if (count >= 1) {
+    if (count === 1) {
+      ctx.beginPath();
+      // ctx.fillStyle='#FFCC00'
+      // ctx.fill();
+      ctx.moveTo(dragStartLocation.x, dragStartLocation.y);
+      ctx.lineTo(position.x, position.y);
+      ctx.stroke();
+      //restore()
+    } else if(count === 2) {
+      //ctx.moveTo(position.x, position.y);
+      ctx.lineTo(position.x, position.y);
+      ctx.stroke();
+      ctx.fillStyle='#FFCC00'
+      ctx.fill();
+      //restore();
     }
-    ctx.lineTo(position.x, position.y);
-    ctx.fill();
-    ctx.stroke();
+   // restore();
   }
 
   function restore() {
@@ -90,7 +101,7 @@ function App() {
     return { x: x, y: y };
   }
 
-  function dragStart(e) {
+  function clickStart(e) {
     //드래깅을 트루로 변환을 한다
     draging = true;
     // 드래그를 할 때 좌표값을 구한다. 구하는데, get으로 구함
@@ -105,6 +116,8 @@ function App() {
     takeStore();
     count++;
     if (count === 3) {
+      ctx.closePath();
+      ctx.stroke();
       draging = false;
       //restore();
       count = 0;
