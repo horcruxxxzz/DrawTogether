@@ -10,7 +10,7 @@ function App() {
     dragStartLocation = {},
     snapshort;
 
-  let ctx; //컨택스트
+  let ctx; //컨택스트 0
   let count = 0;
 
   useEffect(() => {
