@@ -1,7 +1,7 @@
 import { React, useEffect, useState, useRef } from 'react';
 import './App.css';
 
-// 커밋 34
+// 커밋 345
 //클릭했을 때 좌표를 알아내서
 // 만약에 클릭했다면 draw로 만들어내고
 function App() {
