@@ -1,6 +1,9 @@
 import { React, useEffect, useState, useRef } from 'react';
 import './App.css';
 
+// 커밋 345
+//클릭했을 때 좌표를 알아내서
+// 만약에 클릭했다면 draw로 만들어내고
 function App() {
   let canvas;
   let canvasRef = useRef(null); // Ref를 사용해 캔버스의 Dom 값을 가지고 옴
@@ -8,17 +11,18 @@ function App() {
     dragStartLocation = {},
     snapshort;
 
-  let ctx; //컨택스트
+  let ctx; //컨택스트 0
+  let count = 0;
 
   useEffect(() => {
     canvas = canvasRef.current;
     ctx = canvas.getContext('2d');
     //마우스를 내리면 드래깅 스타트를 하고
-    canvas.addEventListener('mousedown', dragStart, false);
+    canvas.addEventListener('click', clickStart, false);
     // 마우스를 무빙하면 드래깅을 하고
     canvas.addEventListener('mousemove', drag, false);
     // 마우스를 떼면 드래깅을 끝낸다
-    canvas.addEventListener('mouseup', dragEnd, false);
+    //canvas.addEventListener('mouseup', dragEnd, false);
   }, []); // []를 사용하면 디드마운트 사용하는 것과 같다
 
   function swichDrag() {
@@ -36,13 +40,27 @@ function App() {
 
   // 드래그 중인 포지션을 넣은 드로우 라인
   function drawLine(position) {
+    // 드래그 한 번 할 때마다 비긴 패스구나? 그러면 안 이어지지... 이 바보야...
     //일반 선은 비긴패스 빼야 됨
-    ctx.beginPath();
-    ctx.moveTo(dragStartLocation.x, dragStartLocation.y);
-
+    // 클릭한 걸 어디에 담고 있다가 drawLine과 이어주어야 한다. 어떻게?
     //공통
-    ctx.lineTo(position.x, position.y);
-    ctx.stroke();
+    if (count === 1) {
+      ctx.beginPath();
+      // ctx.fillStyle='#FFCC00'
+      // ctx.fill();
+      ctx.moveTo(dragStartLocation.x, dragStartLocation.y);
+      ctx.lineTo(position.x, position.y);
+      ctx.stroke();
+      //restore()
+    } else if(count === 2) {
+      //ctx.moveTo(position.x, position.y);
+      ctx.lineTo(position.x, position.y);
+      ctx.stroke();
+      ctx.fillStyle='#FFCC00'
+      ctx.fill();
+      //restore();
+    }
+   // restore();
   }
 
   function restore() {
@@ -84,7 +102,7 @@ function App() {
     return { x: x, y: y };
   }
 
-  function dragStart(e) {
+  function clickStart(e) {
     //드래깅을 트루로 변환을 한다
     draging = true;
     // 드래그를 할 때 좌표값을 구한다. 구하는데, get으로 구함
@@ -97,6 +115,15 @@ function App() {
 
     //테이크 스토어 옵 흔
     takeStore();
+    count++;
+    if (count === 3) {
+      ctx.closePath();
+      ctx.stroke();
+      draging = false;
+      //restore();
+      count = 0;
+    }
+    console.log(count);
   }
 
   return (
@@ -107,3 +134,5 @@ function App() {
     </div>
   );
 }
+
+export default App;
